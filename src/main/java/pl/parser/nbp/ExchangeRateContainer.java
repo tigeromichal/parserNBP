@@ -13,8 +13,18 @@ public class ExchangeRateContainer {
         exchangeRates = new ArrayList<ExchangeRate>();
     }
 
-    public void addExchangeRate(final ExchangeRate obj) {
+    public void add(final ExchangeRate obj) {
         exchangeRates.add(obj);
+    }
+
+    public int getSize() {
+        return exchangeRates.size();
+    }
+
+    public void printAll() {
+        for (int i = 0; i < getSize(); i++) {
+            System.out.println(exchangeRates.get(i));
+        }
     }
 
     private List<ExchangeRate> exchangeRates;
