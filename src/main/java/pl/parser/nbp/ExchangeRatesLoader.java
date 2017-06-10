@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -32,7 +32,7 @@ public class ExchangeRatesLoader {
         String sourceUrl = null;
         String sourceUrlPart = null;
 
-        ArrayList<String> sourceNames = null;
+        HashMap<String, String> sourceNames = null;
 
         int year = 0;
         int days = Days.daysBetween(dateFrom, dateTo).getDays() + 1;
@@ -57,17 +57,8 @@ public class ExchangeRatesLoader {
             String datePart = Integer.toString(year % 1000) + df.format(d.getMonthOfYear())
                     + df.format(d.getDayOfMonth());
 
-            boolean found = false;
-
-            for (int j = 0; j < sourceNames.size(); j++) {
-                if (sourceNames.get(j).contains(datePart) && sourceNames.get(j).startsWith("c")) {
-                    sourceUrlPart = sourceNames.get(j);
-                    found = true;
-                    break;
-                }
-            }
-
-            if (found) {
+            if (sourceNames.containsKey(datePart)) {
+                sourceUrlPart = sourceNames.get(datePart) + datePart;
                 try {
                     sourceUrl = "http://www.nbp.pl/kursy/xml/" + sourceUrlPart + ".xml";
                     container.add(dao.read(sourceUrl, currencyCode));
@@ -75,20 +66,21 @@ public class ExchangeRatesLoader {
                     e.printStackTrace();
                 }
             }
-
         }
 
         return container;
     }
 
-    private ArrayList<String> loadTextFromUrl(final String source) throws IOException {
-        ArrayList<String> result = new ArrayList<String>();
+    private HashMap<String, String> loadTextFromUrl(final String source) throws IOException {
+        HashMap<String, String> result = new HashMap<String, String>();
 
         URL url = new URL(source);
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
         String inputLine = null;
         while ((inputLine = reader.readLine()) != null) {
-            result.add(inputLine);
+            if (inputLine.startsWith("c")) {
+                result.put(inputLine.substring(inputLine.length() - 6), inputLine.substring(0, inputLine.length() - 6));
+            }
         }
         reader.close();
 
