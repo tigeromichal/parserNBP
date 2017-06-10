@@ -14,6 +14,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class MainClass {
     public static void main(String[] args) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
+        DateTime dateToday = new DateTime();
         DateTime dateFrom = null;
         DateTime dateTo = null;
 
@@ -28,10 +29,9 @@ public class MainClass {
             try {
                 dateFrom = formatter.parseDateTime(inputString);
             } catch (Exception e) {
-                e.printStackTrace();
                 exceptionFlag = true;
             }
-        } while (dateFrom.getYear() < 2002 || exceptionFlag);
+        } while (exceptionFlag || dateFrom.getYear() < 2002);
 
         exceptionFlag = false;
         do {
@@ -40,10 +40,13 @@ public class MainClass {
             try {
                 dateTo = formatter.parseDateTime(inputString);
             } catch (Exception e) {
-                e.printStackTrace();
                 exceptionFlag = true;
             }
-        } while (dateTo.compareTo(dateFrom) < 0 || exceptionFlag);
+        } while (exceptionFlag || dateTo.compareTo(dateFrom) < 0);
+
+        if (dateTo.compareTo(dateToday) > 0) {
+            dateTo = dateToday;
+        }
 
         exceptionFlag = false;
         String[] currencies = { "USD", "EUR", "CHF", "GBP" };
@@ -57,12 +60,12 @@ public class MainClass {
         Dao<ExchangeRate> dao = new XmlDao();
         ExchangeRatesLoader loader = new ExchangeRatesLoader(dao);
         ExchangeRateContainer container = loader.loadBetween(dateFrom, dateTo, inputString);
-        // container.printAll();
 
         System.out.println("Odchylenie standardowe kursów sprzedaży: "
-                + Double.toString(container.getSellingRateStandardDeviation()));
+                + Double.toString(Math.round(container.getSellingRateStandardDeviation() * 1000) / 1000D));
 
-        System.out.println("Średni kurs kupna: " + Double.toString(container.getBuyingRateAverage()));
+        System.out.println(
+                "Średni kurs kupna: " + Double.toString(Math.round(container.getBuyingRateAverage() * 1000) / 1000D));
 
     }
 }
