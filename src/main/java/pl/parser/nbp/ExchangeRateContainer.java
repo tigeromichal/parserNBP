@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
  * @author Michał Piasecki
  */
 public class ExchangeRateContainer {
@@ -26,7 +25,7 @@ public class ExchangeRateContainer {
             System.out.println(exchangeRates.get(i));
         }
     }
-    
+
     public double getBuyingRateAverage() {
         double sum = 0.0;
         for (int i = 0; i < getSize(); i++) {
@@ -34,7 +33,7 @@ public class ExchangeRateContainer {
         }
         return sum / getSize();
     }
-    
+
     private double getSellingRateAverage() {
         double sum = 0.0;
         for (int i = 0; i < getSize(); i++) {
@@ -42,7 +41,7 @@ public class ExchangeRateContainer {
         }
         return sum / getSize();
     }
-    
+
     public double getSellingRateStandardDeviation() {
         double average = getSellingRateAverage();
         double sum = 0.0;

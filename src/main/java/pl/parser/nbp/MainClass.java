@@ -1,14 +1,13 @@
 package pl.parser.nbp;
 
-import java.util.Arrays;
-import java.util.Scanner;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 /**
- * 
  * @author Michał Piasecki
  */
 public class MainClass {
@@ -49,7 +48,7 @@ public class MainClass {
         }
 
         exceptionFlag = false;
-        String[] currencies = { "USD", "EUR", "CHF", "GBP" };
+        String[] currencies = {"USD", "EUR", "CHF", "GBP"};
         do {
             System.out.println("Podaj symbol waluty (USD, EUR, CHF lub GBP)");
             inputString = scanner.next();

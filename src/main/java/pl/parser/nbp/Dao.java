@@ -3,7 +3,6 @@ package pl.parser.nbp;
 import java.io.IOException;
 
 /**
- * 
  * @author Michał Piasecki
  */
 public abstract interface Dao<T> extends AutoCloseable {

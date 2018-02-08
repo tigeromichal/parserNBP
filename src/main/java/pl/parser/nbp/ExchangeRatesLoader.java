@@ -1,5 +1,9 @@
 package pl.parser.nbp;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.DurationFieldType;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,12 +11,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.DurationFieldType;
-
 /**
- * 
  * @author Michał Piasecki
  */
 public class ExchangeRatesLoader {
@@ -22,7 +21,7 @@ public class ExchangeRatesLoader {
     }
 
     public ExchangeRateContainer loadBetween(final DateTime dateFrom, final DateTime dateTo,
-            final String currencyCode) {
+                                             final String currencyCode) {
         ExchangeRateContainer container = new ExchangeRateContainer();
 
         DecimalFormat df = new DecimalFormat("00");

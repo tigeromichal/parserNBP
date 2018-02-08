@@ -1,18 +1,16 @@
 package pl.parser.nbp;
 
-import java.io.IOException;
-import java.net.URL;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
+import java.net.URL;
+
 /**
- * 
  * @author Michał Piasecki
  */
 public class XmlDao implements Dao<ExchangeRate>, AutoCloseable {

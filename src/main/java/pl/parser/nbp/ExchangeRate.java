@@ -1,7 +1,6 @@
 package pl.parser.nbp;
 
 /**
- * 
  * @author Michał Piasecki
  */
 public class ExchangeRate {
