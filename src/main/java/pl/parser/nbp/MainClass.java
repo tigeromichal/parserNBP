@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -56,7 +57,12 @@ public class MainClass {
 
         scanner.close();
 
-        Dao<ExchangeRate> dao = new XmlDao();
+        Dao<ExchangeRate> dao = null;
+        try {
+            dao = new XmlDao();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
         ExchangeRatesLoader loader = new ExchangeRatesLoader(dao);
         ExchangeRateContainer container = loader.loadBetween(dateFrom, dateTo, inputString);
 

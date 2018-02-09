@@ -7,6 +7,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -15,13 +16,17 @@ import java.net.URL;
  */
 public class XmlDao implements Dao<ExchangeRate>, AutoCloseable {
 
+    private DocumentBuilder db;
+
+    public XmlDao() throws ParserConfigurationException {
+        db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+    }
+
     public ExchangeRate read(final String url, final String currencyCode) throws IOException {
         ExchangeRate exchangeRate = null;
         Document doc = null;
 
         try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
             doc = db.parse(new URL(url).openStream());
             doc.getDocumentElement().normalize();
         } catch (Exception e) {
@@ -37,7 +42,7 @@ public class XmlDao implements Dao<ExchangeRate>, AutoCloseable {
 
             String code = null;
             try {
-                code = ((Element) element.getElementsByTagName("kod_waluty").item(0)).getTextContent();
+                code = (element.getElementsByTagName("kod_waluty").item(0)).getTextContent();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -46,8 +51,8 @@ public class XmlDao implements Dao<ExchangeRate>, AutoCloseable {
                 String buyingRateString = null;
                 String sellingRateString = null;
                 try {
-                    buyingRateString = ((Element) element.getElementsByTagName("kurs_kupna").item(0)).getTextContent();
-                    sellingRateString = ((Element) element.getElementsByTagName("kurs_sprzedazy").item(0))
+                    buyingRateString = (element.getElementsByTagName("kurs_kupna").item(0)).getTextContent();
+                    sellingRateString = (element.getElementsByTagName("kurs_sprzedazy").item(0))
                             .getTextContent();
                 } catch (Exception e) {
                     e.printStackTrace();

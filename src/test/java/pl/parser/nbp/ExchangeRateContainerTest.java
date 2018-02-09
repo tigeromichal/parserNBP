@@ -5,6 +5,8 @@ import org.junit.Test;
 
 public class ExchangeRateContainerTest {
 
+    private double delta = 0.00001;
+
     @Test
     public void testAdd() {
         ExchangeRateContainer container = new ExchangeRateContainer();
@@ -16,7 +18,6 @@ public class ExchangeRateContainerTest {
 
     @Test
     public void testGetBuyingRateAverage() {
-        double delta = 0.00001;
         ExchangeRateContainer container = new ExchangeRateContainer();
         ExchangeRate rate1 = new ExchangeRate("EUR", 5, 3);
         ExchangeRate rate2 = new ExchangeRate("EUR", 2, 1);
@@ -27,7 +28,6 @@ public class ExchangeRateContainerTest {
 
     @Test
     public void testGetSellingRateStandardDeviation() {
-        double delta = 0.00001;
         ExchangeRateContainer container = new ExchangeRateContainer();
         ExchangeRate rate1 = new ExchangeRate("EUR", 5, 3);
         ExchangeRate rate2 = new ExchangeRate("EUR", 2, 1);

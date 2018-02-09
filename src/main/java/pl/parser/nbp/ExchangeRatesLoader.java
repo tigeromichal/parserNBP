@@ -27,15 +27,15 @@ public class ExchangeRatesLoader {
         DecimalFormat df = new DecimalFormat("00");
         int currentYear = new DateTime().getYear();
 
-        String sourceNamesUrl = null;
-        String sourceUrl = null;
-        String sourceUrlPart = null;
+        String sourceNamesUrl;
+        String sourceUrl;
+        String sourceUrlPart;
 
         HashMap<String, String> sourceNames = null;
 
         int year = 0;
         int days = Days.daysBetween(dateFrom, dateTo).getDays() + 1;
-        DateTime d = null;
+        DateTime d;
         for (int i = 0; i < days; i++) {
             d = dateFrom.withFieldAdded(DurationFieldType.days(), i);
             if (year != d.getYear()) {
@@ -75,7 +75,7 @@ public class ExchangeRatesLoader {
 
         URL url = new URL(source);
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        String inputLine = null;
+        String inputLine;
         while ((inputLine = reader.readLine()) != null) {
             if (inputLine.startsWith("c")) {
                 result.put(inputLine.substring(inputLine.length() - 6), inputLine.substring(0, inputLine.length() - 6));
